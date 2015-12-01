@@ -169,8 +169,8 @@ int main(int argc, char** argv) {
                          Tension=0;
                     
                     Corriente = (16.40 * (medCorriente - 511)) / 341;
-                    
                     itoa(buffer,Tension,10);
+                    
                     UART1PrintString(buffer);
                     UART1PutChar('#');
                     UART1PrintFloat(Corriente);
