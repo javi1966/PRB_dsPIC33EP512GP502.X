@@ -167,7 +167,7 @@ int main(int argc, char** argv) {
                          Tension = (230 * (medVAC - 511)) / 243;
                     else
                          Tension=0;
-                    
+                    //para ver en github
                     Corriente = (16.40 * (medCorriente - 511)) / 341;
                     itoa(buffer,Tension,10);
                     
