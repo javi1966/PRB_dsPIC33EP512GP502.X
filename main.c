@@ -22,8 +22,7 @@ _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF); //XT W/PLL
 //***************************************************************
 #define LED           _LATB4
 #define TRIS_LED      _TRISB4
-#define LED_Y           _LATB15
-#define TRIS_LED_Y      _TRISB15
+
 
 
 
@@ -82,8 +81,7 @@ int main(int argc, char** argv) {
 
 
     TRIS_LED = 0;
-    TRIS_LED_Y=0;
-    LED_Y=1;
+    LED= 1;
 
     CM1CONbits.CON = 1;
     CM1CONbits.OPMODE = 1; //OPAMP 1 on
@@ -161,7 +159,9 @@ int main(int argc, char** argv) {
                 case 'P': //dame buffer corriente
                 case 'p':
                     
-                    LED_Y ^= 1;
+                    LED = 0;
+                    delay_ms(150);
+                    LED = 1;
                     UART1PutChar(0xAA);
                     if(medVAC)
                          Tension = (230 * (medVAC - 511)) / 243;
@@ -198,7 +198,7 @@ void _ISR __attribute__((__no_auto_psv__)) _T1Interrupt(void) {
 
     if (++count > 100) { // 100 cada 10ms
         bVisu = 1;
-        LED ^= 1;
+       
         //  UART1PrintString("TEST\r\n");
 
         //  if (bVisu == TRUE) { //cada segundo
@@ -214,11 +214,11 @@ void _ISR __attribute__((__no_auto_psv__)) _T1Interrupt(void) {
             medCorriente /= 2;
         }
 
-        if (cnt > 9) //  59->1 minuto ,60 sec.
+        if (cnt > 59) //  59->1 minuto ,60 sec.
         {
             //230 max. medido,761 convertidor - 523 =238
-            Tension = (230 * (medVAC - 511)) / 248;
-            Corriente = (8.29 * (medCorriente - 511)) / 185;
+           // Tension = (230 * (medVAC - 511)) / 248;
+           // Corriente = (8.29 * (medCorriente - 511)) / 185;
             cnt = 0;
             medVAC = 0;
             medCorriente = 0;

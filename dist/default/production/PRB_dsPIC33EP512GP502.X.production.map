@@ -115,11 +115,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xfc4          0x17a6  (6054)
 .const                      0x11c4                0x18            0x24  (36)
-.text                       0x11dc               0xa50           0xf78  (3960)
-.dinit                      0x1c2c                0xdc           0x14a  (330)
-.text                       0x1d08                0x90            0xd8  (216)
+.text                       0x11dc               0x9e4           0xed6  (3798)
+.dinit                      0x1bc0                0xdc           0x14a  (330)
+.text                       0x1c9c                0x90            0xd8  (216)
 
-                     Total program memory used (bytes):         0x2964  (10596) 2%
+                     Total program memory used (bytes):         0x28c2  (10434) 1%
 
 
 Data Memory  [Origin = 0x1000, Length = 0xc000]
@@ -280,22 +280,22 @@ External Symbols in Program Memory (by address):
                   0x00162a                  __U1RXInterrupt
                   0x00165e                  _enviaDatos
                   0x00168e                  _main
-                  0x0018c4                  __T1Interrupt
-                  0x0019b8                  _initAD
-                  0x001a26                  _getBufferFull
-                  0x001a30                  _setBufferFull
-                  0x001a3e                  _maxValor
-                  0x001a8a                  _startMedidas
-                  0x001a9c                  _stopMedidas
-                  0x001ab4                  _readADC
-                  0x001adc                  _detectaZeroCross
-                  0x001b04                  _mideTension
-                  0x001b5c                  _mideCorriente
-                  0x001bb4                  __AD1Interrupt
-                  0x001c12                  __T3Interrupt
-                  0x001d08                  _delay_10us
-                  0x001d42                  _delay_ms
-                  0x001d7c                  _delay_us
+                  0x0018b2                  __T1Interrupt
+                  0x00194c                  _initAD
+                  0x0019ba                  _getBufferFull
+                  0x0019c4                  _setBufferFull
+                  0x0019d2                  _maxValor
+                  0x001a1e                  _startMedidas
+                  0x001a30                  _stopMedidas
+                  0x001a48                  _readADC
+                  0x001a70                  _detectaZeroCross
+                  0x001a98                  _mideTension
+                  0x001af0                  _mideCorriente
+                  0x001b48                  __AD1Interrupt
+                  0x001ba6                  __T3Interrupt
+                  0x001c9c                  _delay_10us
+                  0x001cd6                  _delay_ms
+                  0x001d10                  _delay_us
 
 External Symbols in Program Memory (by name):
 
@@ -315,10 +315,10 @@ External Symbols in Program Memory (by name):
                   0x0013bc                  _UART1PutHexDWord
                   0x00137e                  _UART1PutHexWord
                   0x001276                  _UART1RXRdy
-                  0x001bb4                  __AD1Interrupt
+                  0x001b48                  __AD1Interrupt
                   0x0002d2                  __DefaultInterrupt
-                  0x0018c4                  __T1Interrupt
-                  0x001c12                  __T3Interrupt
+                  0x0018b2                  __T1Interrupt
+                  0x001ba6                  __T3Interrupt
                   0x00162a                  __U1RXInterrupt
                   0x0015fa                  __U1TXInterrupt
                   0x000334                  ___addsf3
@@ -354,23 +354,23 @@ External Symbols in Program Memory (by name):
                   0x000200                  __resetPRI
                   0x000732                  __sprintf_cdnopuxX
                   0x000770                  __vfprintf_cdnopuxX
-                  0x001d08                  _delay_10us
-                  0x001d42                  _delay_ms
-                  0x001d7c                  _delay_us
-                  0x001adc                  _detectaZeroCross
+                  0x001c9c                  _delay_10us
+                  0x001cd6                  _delay_ms
+                  0x001d10                  _delay_us
+                  0x001a70                  _detectaZeroCross
                   0x00165e                  _enviaDatos
                   0x0004d8                  _floorf
-                  0x001a26                  _getBufferFull
-                  0x0019b8                  _initAD
+                  0x0019ba                  _getBufferFull
+                  0x00194c                  _initAD
                   0x000716                  _itoa
                   0x00168e                  _main
-                  0x001a3e                  _maxValor
-                  0x001b5c                  _mideCorriente
-                  0x001b04                  _mideTension
-                  0x001ab4                  _readADC
-                  0x001a30                  _setBufferFull
-                  0x001a8a                  _startMedidas
-                  0x001a9c                  _stopMedidas
+                  0x0019d2                  _maxValor
+                  0x001af0                  _mideCorriente
+                  0x001a98                  _mideTension
+                  0x001a48                  _readADC
+                  0x0019c4                  _setBufferFull
+                  0x001a1e                  _startMedidas
+                  0x001a30                  _stopMedidas
                   0x0006e2                  _utoa
 
 Memory Configuration
@@ -588,12 +588,12 @@ __FUID3
  .debug_abbrev    0x00038a         0x7d build/default/production/delay.o
  .debug_abbrev    0x000407        0x204 build/default/production/uart1.o
 
-.debug_line       0x000000        0xf18
+.debug_line       0x000000        0xf08
  *(.debug_line)
- .debug_line      0x000000        0x396 build/default/production/main.o
- .debug_line      0x000396        0x4d7 build/default/production/adc.o
- .debug_line      0x00086d         0xf2 build/default/production/delay.o
- .debug_line      0x00095f        0x5b9 build/default/production/uart1.o
+ .debug_line      0x000000        0x386 build/default/production/main.o
+ .debug_line      0x000386        0x4d7 build/default/production/adc.o
+ .debug_line      0x00085d         0xf2 build/default/production/delay.o
+ .debug_line      0x00094f        0x5b9 build/default/production/uart1.o
 
 .debug_frame      0x000000        0x2ac
  *(.debug_frame)
@@ -652,17 +652,17 @@ __FUID3
                   0x000014          0x4 LONG 0x2d2 DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x2d2 DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x2d2 DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x18c4 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x18b2 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x2d2 DEFINED (__DMA0Interrupt)?ABSOLUTE (__DMA0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x2d2 DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2d2 DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000022          0x4 LONG 0x2d2 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x1c12 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x1ba6 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x2d2 DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x2d2 DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x162a DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002c          0x4 LONG 0x15fa DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00002e          0x4 LONG 0x1bb4 DEFINED (__AD1Interrupt)?ABSOLUTE (__AD1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00002e          0x4 LONG 0x1b48 DEFINED (__AD1Interrupt)?ABSOLUTE (__AD1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000030          0x4 LONG 0x2d2 DEFINED (__DMA1Interrupt)?ABSOLUTE (__DMA1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000032          0x4 LONG 0x2d2 DEFINED (__Interrupt15)?ABSOLUTE (__Interrupt15):ABSOLUTE (__DefaultInterrupt)
                   0x000034          0x4 LONG 0x2d2 DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -2048,7 +2048,7 @@ __c30_signature
  .const             0x91c4         0x18 build/default/production/uart1.o
                     0x91c4                  _CharacterArray
 
-.text             0x0011dc        0xa50
+.text             0x0011dc        0x9e4
  .text            0x0011dc        0x482 build/default/production/uart1.o
                   0x0011dc                  _UART1GetBaudError
                   0x0011ea                  _UART1GetChar
@@ -2067,29 +2067,29 @@ __c30_signature
                   0x0015ac                  _UART1PrintFloat
                   0x0015fa                  __U1TXInterrupt
                   0x00162a                  __U1RXInterrupt
- .text            0x00165e        0x35a build/default/production/main.o
+ .text            0x00165e        0x2ee build/default/production/main.o
                   0x00165e                  _enviaDatos
                   0x00168e                  _main
-                  0x0018c4                  __T1Interrupt
- .text            0x0019b8        0x274 build/default/production/adc.o
-                  0x0019b8                  _initAD
-                  0x001a26                  _getBufferFull
-                  0x001a30                  _setBufferFull
-                  0x001a3e                  _maxValor
-                  0x001a8a                  _startMedidas
-                  0x001a9c                  _stopMedidas
-                  0x001ab4                  _readADC
-                  0x001adc                  _detectaZeroCross
-                  0x001b04                  _mideTension
-                  0x001b5c                  _mideCorriente
-                  0x001bb4                  __AD1Interrupt
-                  0x001c12                  __T3Interrupt
+                  0x0018b2                  __T1Interrupt
+ .text            0x00194c        0x274 build/default/production/adc.o
+                  0x00194c                  _initAD
+                  0x0019ba                  _getBufferFull
+                  0x0019c4                  _setBufferFull
+                  0x0019d2                  _maxValor
+                  0x001a1e                  _startMedidas
+                  0x001a30                  _stopMedidas
+                  0x001a48                  _readADC
+                  0x001a70                  _detectaZeroCross
+                  0x001a98                  _mideTension
+                  0x001af0                  _mideCorriente
+                  0x001b48                  __AD1Interrupt
+                  0x001ba6                  __T3Interrupt
 
-.dinit            0x001c2c         0xdc
- .dinit           0x001c2c         0xdc data_init
+.dinit            0x001bc0         0xdc
+ .dinit           0x001bc0         0xdc data_init
 
-.text             0x001d08         0x90
- .text            0x001d08         0x90 build/default/production/delay.o
-                  0x001d08                  _delay_10us
-                  0x001d42                  _delay_ms
-                  0x001d7c                  _delay_us
+.text             0x001c9c         0x90
+ .text            0x001c9c         0x90 build/default/production/delay.o
+                  0x001c9c                  _delay_10us
+                  0x001cd6                  _delay_ms
+                  0x001d10                  _delay_us
