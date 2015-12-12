@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "adc.h"
 #include "uart1.h"
+#include "drv18B20.h"
 
 _FPOR(ALTI2C1_OFF & ALTI2C2_OFF);
 _FWDT(PLLKEN_ON & FWDTEN_OFF);
@@ -37,6 +38,7 @@ long medVAC = 0;
 long medCorriente = 0;
 WORD Tension;
 float Corriente;
+BYTE Temperatura;
 //**********************************************************
 
 void enviaDatos(WORD *buffer) {
@@ -57,6 +59,7 @@ int main(int argc, char** argv) {
 
     char buffer[5]={0};
     char cmd;
+    
 
    
 
@@ -89,6 +92,7 @@ int main(int argc, char** argv) {
     CVRCONbits.CVR2OE = 1; // 1/2 Vdd-VSS/2
     initAD();
     UART1Init();
+    
 
     //Configura TMR1 FCY=(1/20000000)0.05us * 256 * 65536
     T1CONbits.TCKPS = 3; //256
@@ -98,6 +102,9 @@ int main(int argc, char** argv) {
     IFS0bits.T1IF = 0;
     IEC0bits.T1IE = 1;
     T1CONbits.TON = 1;
+    
+    
+    
 
     //****************************************************************
 
@@ -175,7 +182,15 @@ int main(int argc, char** argv) {
                     UART1PutChar('#');
                     UART1PrintFloat(Corriente);
                     UART1PutChar(0x55);
-                    break;    
+                    break;
+                    
+                case 'K':
+                case 'k':
+                    Temperatura=leeTempDS18B20(9);
+                    itoa(buffer,Temperatura,10);
+                    UART1PutChar(0xAA);
+                    UART1PrintString(buffer);
+                    UART1PutChar(0x55);
 
                 default:
                     break;

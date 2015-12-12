@@ -7,6 +7,7 @@
       <itemPath>adc.h</itemPath>
       <itemPath>delay.h</itemPath>
       <itemPath>uart1.h</itemPath>
+      <itemPath>drv18B20.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -19,6 +20,7 @@
       <itemPath>adc.c</itemPath>
       <itemPath>delay.c</itemPath>
       <itemPath>uart1.c</itemPath>
+      <itemPath>drv18B20.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
