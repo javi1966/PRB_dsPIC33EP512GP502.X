@@ -25,8 +25,6 @@ _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF); //XT W/PLL
 #define TRIS_LED      _TRISB4
 
 
-
-
 #define GetSystemClock()		(40000000ul)
 #define GetInstructionClock()	(GetSystemClock()/2)
 #define GetPeripheralClock()	(GetSystemClock()/2)
@@ -39,8 +37,17 @@ long medCorriente = 0;
 WORD Tension;
 float Corriente;
 BYTE Temperatura;
-//**********************************************************
+char buffer[5] = {0};
 
+//**********************************************************
+void borraBuffer()
+{
+    int i;
+    for (i=0;i<5;i++)
+        buffer[i]='\0';
+    
+}
+//***************************************************************
 void enviaDatos(WORD *buffer) {
     int n;
 
@@ -53,15 +60,14 @@ void enviaDatos(WORD *buffer) {
 
 }
 
-
 /**************************************************************/
 int main(int argc, char** argv) {
 
-    char buffer[5]={0};
-    char cmd;
     
+    char cmd;
 
-   
+
+
 
     //The settings below set up the oscillator and PLL for 60 MIPS as
     //follows:
@@ -84,7 +90,7 @@ int main(int argc, char** argv) {
 
 
     TRIS_LED = 0;
-    LED= 1;
+    LED = 1;
 
     CM1CONbits.CON = 1;
     CM1CONbits.OPMODE = 1; //OPAMP 1 on
@@ -92,7 +98,7 @@ int main(int argc, char** argv) {
     CVRCONbits.CVR2OE = 1; // 1/2 Vdd-VSS/2
     initAD();
     UART1Init();
-    
+
 
     //Configura TMR1 FCY=(1/20000000)0.05us * 256 * 65536
     T1CONbits.TCKPS = 3; //256
@@ -102,12 +108,20 @@ int main(int argc, char** argv) {
     IFS0bits.T1IF = 0;
     IEC0bits.T1IE = 1;
     T1CONbits.TON = 1;
-    
-    
-    
 
-    //****************************************************************
+    //Configura Timer 2 para lectura sensor temperatura.
 
+    T2CONbits.TCKPS = 3; //256 FCY=(1/20000000)0.05us * 256 * 65536
+    TMR2 = 0;
+    IPC1bits.T2IP = 1;
+    IFS0bits.T2IF = 0;
+    IEC0bits.T2IE = 1;
+    T2CONbits.TON = 1; 
+
+    // Medida inicial **************************************************************
+     Temperatura = leeTempDS18B20(9);
+     
+     //*************************************************************
     while (TRUE) {
 
 
@@ -118,21 +132,25 @@ int main(int argc, char** argv) {
             switch (cmd) {
                 case 'T': //dame tension
                 case 't':
-                    if(medVAC)
-                         Tension = (230 * (medVAC - 511)) / 243;
+                    borraBuffer();
+                    if (medVAC)
+                        Tension = (230 * (medVAC - 511)) / 243;
                     else
-                         Tension=0;
-                    
-                         itoa(buffer,Tension,10);
-                         UART1PutChar(0xAA);
-                         UART1PrintString(buffer);
-                         UART1PutChar(0x55);
+                        Tension = 0;
 
-                        
-                         
-                         break;
+                    itoa(buffer, Tension, 10);
+                    UART1PutChar(0xAA);
+                    UART1PrintString(buffer);
+                    UART1PutChar(0x55);
+
+
+
+                    break;
                 case 'C': //dame corriente
                 case 'c':
+                    
+                     borraBuffer();
+                    
                     /*
                      Con radiador consumiendo 8.20 A en el AD:
                      Max 681, Min 341
@@ -141,7 +159,7 @@ int main(int argc, char** argv) {
                      16.4 *(Valor max consumo-511(Vref/2) / Valor minimo
                      a 8.20 (341)
                      */
-
+                      
                     Corriente = (16.40 * (medCorriente - 511)) / 341;
 
                     UART1PutChar(0xAA);
@@ -162,36 +180,38 @@ int main(int argc, char** argv) {
                     enviaDatos(corriente);
                     UART1PutChar(0x55);
                     break;
-                    
+
                 case 'P': //dame buffer corriente
                 case 'p':
-                    
+                     borraBuffer();
                     LED = 0;
                     delay_ms(150);
                     LED = 1;
                     UART1PutChar(0xAA);
-                    if(medVAC)
-                         Tension = (230 * (medVAC - 511)) / 243;
+                    if (medVAC)
+                        Tension = (230 * (medVAC - 511)) / 243;
                     else
-                         Tension=0;
+                        Tension = 0;
                     //para ver en github
                     Corriente = (16.40 * (medCorriente - 511)) / 341;
-                    itoa(buffer,Tension,10);
-                    
+                    itoa(buffer, Tension, 10);
+
                     UART1PrintString(buffer);
                     UART1PutChar('#');
                     UART1PrintFloat(Corriente);
                     UART1PutChar(0x55);
                     break;
-                    
+
                 case 'K':
                 case 'k':
-                    Temperatura=leeTempDS18B20(9);
-                    itoa(buffer,Temperatura,10);
+                    borraBuffer();
+                   // Temperatura = leeTempDS18B20(9);
+                    itoa(buffer, Temperatura, 10);
+
                     UART1PutChar(0xAA);
                     UART1PrintString(buffer);
                     UART1PutChar(0x55);
-
+                    break;
                 default:
                     break;
 
@@ -213,7 +233,7 @@ void _ISR __attribute__((__no_auto_psv__)) _T1Interrupt(void) {
 
     if (++count > 100) { // 100 cada 10ms
         bVisu = 1;
-       
+
         //  UART1PrintString("TEST\r\n");
 
         //  if (bVisu == TRUE) { //cada segundo
@@ -232,8 +252,8 @@ void _ISR __attribute__((__no_auto_psv__)) _T1Interrupt(void) {
         if (cnt > 59) //  59->1 minuto ,60 sec.
         {
             //230 max. medido,761 convertidor - 523 =238
-           // Tension = (230 * (medVAC - 511)) / 248;
-           // Corriente = (8.29 * (medCorriente - 511)) / 185;
+            // Tension = (230 * (medVAC - 511)) / 248;
+            // Corriente = (8.29 * (medCorriente - 511)) / 185;
             cnt = 0;
             medVAC = 0;
             medCorriente = 0;
@@ -244,4 +264,16 @@ void _ISR __attribute__((__no_auto_psv__)) _T1Interrupt(void) {
 
     IFS0bits.T1IF = 0;
 
+}
+//*************************************************************************
+void _ISR __attribute__((__no_auto_psv__)) _T2Interrupt(void) {
+    
+    static int cnt = 0;
+    
+    if(++cnt > 60) //aprox 1 min
+    {
+        Temperatura = leeTempDS18B20(9);
+        cnt=0;
+    }   
+     IFS0bits.T2IF = 0;
 }
