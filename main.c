@@ -205,7 +205,7 @@ int main(int argc, char** argv) {
                 case 'K':
                 case 'k':
                     borraBuffer();
-                   // Temperatura = leeTempDS18B20(9);
+                    //Temperatura = leeTempDS18B20(9);
                     itoa(buffer, Temperatura, 10);
 
                     UART1PutChar(0xAA);
