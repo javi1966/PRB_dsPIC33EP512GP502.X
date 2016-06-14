@@ -21,9 +21,10 @@ _FICD(ICS_PGD2 & JTAGEN_OFF); // PGD3 for 28pin devices
 _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF); //XT W/PLL
 
 //***************************************************************
-#define LED           _LATB4
-#define TRIS_LED      _TRISB4
-
+#define LED                _LATB4
+#define TRIS_LED           _TRISB4
+#define VAL_MIN_VOLT_MAX   120
+#define VAL_VREF           511
 
 #define GetSystemClock()		(40000000ul)
 #define GetInstructionClock()	(GetSystemClock()/2)
@@ -65,9 +66,6 @@ int main(int argc, char** argv) {
 
     
     char cmd;
-
-
-
 
     //The settings below set up the oscillator and PLL for 60 MIPS as
     //follows:
@@ -134,7 +132,7 @@ int main(int argc, char** argv) {
                 case 't':
                     borraBuffer();
                     if (medVAC)
-                        Tension = (230 * (medVAC - 511)) / 243;
+                        Tension = (230 * (medVAC - VAL_VREF)) / (VAL_VREF-VAL_MIN_VOLT_MAX);  
                     else
                         Tension = 0;
 
@@ -189,7 +187,7 @@ int main(int argc, char** argv) {
                     LED = 1;
                     UART1PutChar(0xAA);
                     if (medVAC)
-                        Tension = (230 * (medVAC - 511)) / 243;
+                        Tension = (230 * (medVAC - 511)) / 421;
                     else
                         Tension = 0;
                     //para ver en github
