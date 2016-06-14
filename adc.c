@@ -12,8 +12,8 @@ BYTE bBufferFull = FALSE;
 WORD inSamplesCurr[SMP_BUFFER];
 WORD inSamplesVolt[SMP_BUFFER];
 WORD inSamplesPow [SMP_BUFFER];
- WORD tension[SMP_BUFFER];
- WORD corriente[SMP_BUFFER];
+WORD tension[SMP_BUFFER];
+WORD corriente[SMP_BUFFER];
 UINT32 voltageAcc = 0;
 UINT32 currentAcc = 0;
 double powerAcc = 0;
@@ -36,7 +36,7 @@ void initAD(void) {
 
 
     //ANSELBbits.ANSB1 = 1;
-  //  _ANSA3 = 1;
+    //  _ANSA3 = 1;
     _ANSA0 = 1;
     AD1CON1 = 0x0000; // Turn off the A/D converter
     AD1CON1bits.FORM = 0; //INTEGER
@@ -136,9 +136,10 @@ void stopMedidas() {
 }
 
 //******************************************************************
+
 WORD readADC(BYTE canal) {
 
-    AD1CHS0bits.CH0SA=canal;
+    AD1CHS0bits.CH0SA = canal;
     AD1CON1bits.SAMP = 1;
 
     while (!AD1CON1bits.DONE);
@@ -151,7 +152,7 @@ void detectaZeroCross() {
     BOOL sc = FALSE;
     WORD temp;
 
-    while (sc==FALSE) {
+    while (sc == FALSE) {
 
         delay_us(100);
         temp = readADC(TENSION);
@@ -163,43 +164,45 @@ void detectaZeroCross() {
 
 }
 //******************************************************************
-WORD mideTension(){
+
+WORD mideTension() {
 
     int i;
-   
-    WORD tension_hi=0;
-    
 
-    for(i=0;i<SMP_BUFFER;i++){
+    WORD tension_hi = 0;
+
+
+    for (i = 0; i < SMP_BUFFER; i++) {
         delay_us(200); //100*200us-> 20ms 50Hz
-        tension[i]=readADC(TENSION);
-        if(tension_hi < tension[i])
-            tension_hi=tension[i];
-       
+        tension[i] = readADC(TENSION);
+        if (tension_hi < tension[i])
+            tension_hi = tension[i];
+
     }
 
-     if(tension_hi < 550)
-           tension_hi=511;
-    
+    if (tension_hi < 550)
+        tension_hi = 511;
+
 
     return tension_hi;
 
 }
 //******************************************************************
-WORD mideCorriente(){
+
+WORD mideCorriente() {
 
     int i;
-    
-    WORD corriente_hi=0;
 
-     for(i=0;i<100;i++){
+    WORD corriente_hi = 0;
+
+    for (i = 0; i < 100; i++) {
         delay_us(200); //100*200us-> 20ms 50Hz
-        corriente[i]=readADC(CORRIENTE);
-        if(corriente_hi < corriente[i]) corriente_hi=corriente[i];
+        corriente[i] = readADC(CORRIENTE);
+        if (corriente_hi < corriente[i]) corriente_hi = corriente[i];
 
     }
-    if(corriente_hi < 540)
-           corriente_hi=511;
+    if (corriente_hi < 540)
+        corriente_hi = 511;
     return corriente_hi;
 
 
