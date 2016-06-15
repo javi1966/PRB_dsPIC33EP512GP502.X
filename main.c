@@ -187,11 +187,11 @@ int main(int argc, char** argv) {
                     LED = 1;
                     UART1PutChar(0xAA);
                     if (medVAC)
-                        Tension = (230 * (medVAC - 511)) / 421;
+                        Tension = (230 * (medVAC - VAL_VREF)) / (VAL_VREF-VAL_MIN_VOLT_MAX);
                     else
                         Tension = 0;
                     //para ver en github
-                    Corriente = (16.40 * (medCorriente - 511)) / 341;
+                    Corriente = (16.40 * (medCorriente - VAL_VREF)) /(VAL_VREF- 341);
                     itoa(buffer, Tension, 10);
 
                     UART1PrintString(buffer);
