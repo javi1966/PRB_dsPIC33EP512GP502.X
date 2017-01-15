@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
                 case 't':
                     borraBuffer();
                     if (medVAC)
-                        Tension = (243 * (medVAC - VAL_VREF)) / (VAL_VREF-VAL_MIN_VOLT_MAX);  
+                        Tension =( 243 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
                     else
                         Tension = 0;
 
@@ -188,11 +188,12 @@ int main(int argc, char** argv) {
                     LED = 1;
                     UART1PutChar(0xAA);
                     if (medVAC)
-                        Tension = (230 * (medVAC - VAL_VREF)) / (VAL_VREF-VAL_MIN_VOLT_MAX);
+                        Tension =( 243 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
                     else
                         Tension = 0;
                     //para ver en github
-                    Corriente = (16.40 * (medCorriente - VAL_VREF)) /(VAL_VREF- 341);
+                    Corriente = (16.40 * (medCorriente - VAL_AREF) /  
+                                         (VAL_AREF-VAL_MIN_AMP_MAX));  
                     itoa(buffer, Tension, 10);
 
                     UART1PrintString(buffer);
