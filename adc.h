@@ -22,7 +22,7 @@
 #define K_CS60       1.61
 
 #define TENSION      0        //AN0
-#define CORRIENTE    3        //AN3
+#define CORRIENTE    1        //AN1
 
 
 void initAD(void);

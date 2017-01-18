@@ -4,8 +4,6 @@
 #include "adc.h"
 
 
-
-
 WORD adcCntrVolt = 0;
 WORD adcCntrCurr = 0;
 BYTE bBufferFull = FALSE;
@@ -29,6 +27,8 @@ void initAD(void) {
     _TRISA3 = 1;
     _LATA0 = 0;
     _TRISA0 = 1;
+    _LATA1 = 0;
+    _TRISA1 = 1;
     _LATB2 = 0;
     _TRISB2 = 1;
     _LATB3 = 0;
@@ -38,6 +38,7 @@ void initAD(void) {
     //ANSELBbits.ANSB1 = 1;
     //  _ANSA3 = 1;
     _ANSA0 = 1;
+    _ANSA1 = 1;
     AD1CON1 = 0x0000; // Turn off the A/D converter
     AD1CON1bits.FORM = 0; //INTEGER
     //AD1CON1bits.SSRC = 2; //TMR3

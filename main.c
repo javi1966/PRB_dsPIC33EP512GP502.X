@@ -23,9 +23,9 @@ _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF); //XT W/PLL
 //***************************************************************
 #define LED                _LATB4
 #define TRIS_LED           _TRISB4
-#define VAL_MIN_VOLT_MAX   113
+#define VAL_MIN_VOLT_MAX   88
 #define VAL_VREF           511
-#define VAL_MIN_AMP_MAX    264
+#define VAL_MIN_AMP_MAX    1
 #define VAL_AREF           510
 
 #define GetSystemClock()		(40000000ul)
@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
                 case 't':
                     borraBuffer();
                     if (medVAC)
-                        Tension =( 243 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
+                        Tension =( 239 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
                     else
                         Tension = 0;
 
@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
                      a 8.20 (341)
                      */
                       
-                    Corriente = (16.40 * (medCorriente - VAL_AREF) /  
+                     Corriente = (16.40 * (medCorriente - VAL_AREF) /  
                                          (VAL_AREF-VAL_MIN_AMP_MAX));  
 
                     UART1PutChar(0xAA);
@@ -188,7 +188,7 @@ int main(int argc, char** argv) {
                     LED = 1;
                     UART1PutChar(0xAA);
                     if (medVAC)
-                        Tension =( 243 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
+                        Tension =( 239 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
                     else
                         Tension = 0;
                     //para ver en github
