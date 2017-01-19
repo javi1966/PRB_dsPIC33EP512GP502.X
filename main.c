@@ -26,7 +26,7 @@ _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF); //XT W/PLL
 #define VAL_MIN_VOLT_MAX   88
 #define VAL_VREF           511
 #define VAL_MIN_AMP_MAX    1
-#define VAL_AREF           510
+#define VAL_AREF           443
 
 #define GetSystemClock()		(40000000ul)
 #define GetInstructionClock()	(GetSystemClock()/2)
@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
     T2CONbits.TON = 1; 
 
     // Medida inicial **************************************************************
-     Temperatura = leeTempDS18B20(9);
+    Temperatura = leeTempDS18B20(9);
      
      //*************************************************************
     while (TRUE) {
@@ -147,23 +147,20 @@ int main(int argc, char** argv) {
                 case 'C': //dame corriente
                 case 'c':
                     
+                    
+                    //Corriente=(float)mideCorriente_v1();
+                    /*
                      borraBuffer();
                     
-                    /*
-                     Con radiador consumiendo 8.20 A en el AD:
-                     Max 681, Min 341
-                     como el OPAMP tiene ganancia 2 ?? 100K/10k-1
-                     formula para valor maximo 8.20 A * 2
-                     16.4 *(Valor max consumo-511(Vref/2) / Valor minimo
-                     a 8.20 (341)
-                     */
+                    */
                       
-                     Corriente = (16.40 * (medCorriente - VAL_AREF) /  
-                                         (VAL_AREF-VAL_MIN_AMP_MAX));  
+                    Corriente = 26.4 * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;   
+                                         
 
                     UART1PutChar(0xAA);
                     UART1PrintFloat(Corriente);
                     UART1PutChar(0x55);
+                    
                     break;
 
                 case 'A': //dame buffer tension
@@ -192,8 +189,7 @@ int main(int argc, char** argv) {
                     else
                         Tension = 0;
                     //para ver en github
-                    Corriente = (16.40 * (medCorriente - VAL_AREF) /  
-                                         (VAL_AREF-VAL_MIN_AMP_MAX));  
+                    Corriente = 26.6 * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;   
                     itoa(buffer, Tension, 10);
 
                     UART1PrintString(buffer);

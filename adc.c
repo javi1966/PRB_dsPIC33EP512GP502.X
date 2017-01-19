@@ -45,8 +45,8 @@ void initAD(void) {
     AD1CON1bits.SSRC = 0b111; //auto convert
     AD1CON1bits.ASAM = 1; //auto
     //AD1CON1bits.ASAM = 0; //manual
-    AD1CON3bits.ADCS = 0x08; //8*TCY  = TAD
-    AD1CON3bits.SAMC = 0x08; //8*TAD   sample time
+    AD1CON3bits.ADCS = 0x0F; //8*TCY  = TAD
+    AD1CON3bits.SAMC = 0x0F; //8*TAD   sample time
     //AD1CHS0bits.CH0SA = 0b11000; // Channel 0 positive input is the output of OA1/AN3
     AD1CHS0bits.CH0SA = 0b00000; //an1
     AD1CHS0bits.CH0NA = 0; //vss
@@ -207,6 +207,21 @@ WORD mideCorriente() {
     return corriente_hi;
 
 
+}
+//**********************************************************
+WORD mideCorriente_v1() {
+    
+    WORD media;
+    BYTE i;
+    
+    media=0;
+    for(i=0;i<5;i++){
+        
+        media+=readADC(CORRIENTE);
+    }
+    
+     return media/5;
+    
 }
 
 //************************************************************************
