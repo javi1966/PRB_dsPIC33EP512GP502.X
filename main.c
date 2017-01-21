@@ -25,8 +25,9 @@ _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF); //XT W/PLL
 #define TRIS_LED           _TRISB4
 #define VAL_MIN_VOLT_MAX   88
 #define VAL_VREF           511
-#define VAL_MIN_AMP_MAX    1
+
 #define VAL_AREF           443
+#define FACTOR_A           25.9
 
 #define GetSystemClock()		(40000000ul)
 #define GetInstructionClock()	(GetSystemClock()/2)
@@ -92,10 +93,14 @@ int main(int argc, char** argv) {
     TRIS_LED = 0;
     LED = 1;
 
-    CM1CONbits.CON = 1;
+    //configura OPAMP
+    CM1CONbits.CON = 0;
     CM1CONbits.OPMODE = 1; //OPAMP 1 on
+    CM1CONbits.COE = 1;     //salida OPAMP A/D exterior
     CVRCONbits.CVREN = 1;
     CVRCONbits.CVR2OE = 1; // 1/2 Vdd-VSS/2
+    CM1CONbits.CON = 1;
+    
     initAD();
     UART1Init();
 
@@ -146,15 +151,12 @@ int main(int argc, char** argv) {
                     break;
                 case 'C': //dame corriente
                 case 'c':
-                    
-                    
-                    //Corriente=(float)mideCorriente_v1();
-                    /*
-                     borraBuffer();
-                    
-                    */
-                      
-                    Corriente = 26.4 * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;   
+                   
+                   
+                    Corriente=0.0;
+                
+                    delay_ms(500);  
+                    Corriente = FACTOR_A  * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;
                                          
 
                     UART1PutChar(0xAA);
@@ -180,6 +182,7 @@ int main(int argc, char** argv) {
                 case 'P': //dame buffer corriente
                 case 'p':
                      borraBuffer();
+                     Corriente=0.0;
                     LED = 0;
                     delay_ms(150);
                     LED = 1;
@@ -189,9 +192,10 @@ int main(int argc, char** argv) {
                     else
                         Tension = 0;
                     //para ver en github
-                    Corriente = 26.6 * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;   
+                    Corriente = FACTOR_A  * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;   
+                    
+                    
                     itoa(buffer, Tension, 10);
-
                     UART1PrintString(buffer);
                     UART1PutChar('#');
                     UART1PrintFloat(Corriente);

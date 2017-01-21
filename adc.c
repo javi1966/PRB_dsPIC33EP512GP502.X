@@ -23,8 +23,8 @@ BOOL bInt1 = FALSE;
 
 void initAD(void) {
 
-    _LATA3 = 0;
-    _TRISA3 = 1;
+    //_LATA3 = 0;
+    //_TRISA3 = 1;
     _LATA0 = 0;
     _TRISA0 = 1;
     _LATA1 = 0;
@@ -215,12 +215,13 @@ WORD mideCorriente_v1() {
     BYTE i;
     
     media=0;
-    for(i=0;i<5;i++){
+    for(i=0;i<10;i++){
         
         media+=readADC(CORRIENTE);
+        delay_us(50);
     }
     
-     return media/5;
+     return media/10;
     
 }
 
