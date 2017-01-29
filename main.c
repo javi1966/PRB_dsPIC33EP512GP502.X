@@ -137,9 +137,11 @@ int main(int argc, char** argv) {
             switch (cmd) {
                 case 'T': //dame tension
                 case 't':
+                    delay_ms(150);
                     borraBuffer();
                     if (medVAC)
-                        Tension =( 239 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
+                        Tension =( 237 * (medVAC - VAL_VREF)
+                                / (VAL_VREF-VAL_MIN_VOLT_MAX));  
                     else
                         Tension = 0;
 
@@ -188,9 +190,11 @@ int main(int argc, char** argv) {
                     LED = 1;
                     UART1PutChar(0xAA);
                     if (medVAC)
-                        Tension =( 239 * (medVAC - VAL_VREF) / (VAL_VREF-VAL_MIN_VOLT_MAX));  
+                        Tension =( 237 * (medVAC - VAL_VREF)/ (VAL_VREF-VAL_MIN_VOLT_MAX));  
+                                
                     else
                         Tension = 0;
+                    
                     //para ver en github
                     Corriente = FACTOR_A  * (mideCorriente_v1() - VAL_AREF )/VAL_AREF;   
                     
